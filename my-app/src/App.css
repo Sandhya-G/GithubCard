@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+  max-width: 100%;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 10s linear;
+  height: 8vmin;
+  background-color: inherit;
+}
+
+.App-header {
+  overflow: hidden;
+  background-color:#000000;
+  display: inline-flex;
+  padding: 30px 10px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
