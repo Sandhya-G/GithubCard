@@ -9,11 +9,14 @@ class App extends Component {
     super()
     this.state = {
       username:"",
+      character:"",
       image:"",
       rep:"",
       followers:"",
       following:"",
-      character:""
+      character:"",
+      displayData:"",
+      error:false
 
     }
     this.handleChange = this.handleChange.bind(this)
@@ -23,10 +26,13 @@ class App extends Component {
   display(data)
   {
     this.setState(
-      {username:data.login ,
+      { displayData:true,
+        character:data,
+        username:data.login ,
         url:data.url,
         followers:data.followers,
         following:data.following,
+        image:data.avatar_url,
         rep:data.public_repos}
 
       )
@@ -35,28 +41,24 @@ class App extends Component {
     {
        let url = `${API}/${username}`;
         console.log(url);
-        this.setState({loading: true})
         fetch(url)
             .then(response => response.json())
             .then(data => {
                this.display(data)
-              
-            })
+            }).catch((error) => this.setState({error:true}) )
+  }
 
-    }
 
   handleChange(event) {
         this.setState({
-            username: event.target.value
+            username: event.target.value,
+            displayData:false
             
         })
     }
 
      handleSubmit(event) {
         event.preventDefault()
-        this.setState({
-            display:true
-        })
         console.log(this.state.username)
         this.getData(this.state.username)
         
@@ -90,11 +92,25 @@ class App extends Component {
                 <button>Search</button>
           </form>
           <br /><br /><br /><br />
-          {this.state.username}
-          {this.state.followers}
-          {this.state.following}
-          {this.state.rep}
-          <img src="{this.state.image}"/>          
+          {(this.state.displayData && this.state.character.login) ?
+            
+                <div>
+                  <div> {this.state.username}</div>
+                  <div>{this.state.rep}</div>
+                  <div>{this.state.followers}</div>
+                  <div>{this.state.following}</div>
+                  {console.log(this.state.image)}
+                  <div><img src={this.state.image}/></div>
+                </div>
+
+
+
+                : <div> {(this.state.error) ? "Error, Try again Later" : "enter valid username" }</div>
+
+            }
+             {console.log(this.state.character)}
+
+                  
           
     
         
