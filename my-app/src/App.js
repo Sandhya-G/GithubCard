@@ -76,36 +76,50 @@ class App extends Component {
             })*/
 
 
-
-
   render() {
     return (
       <div >
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} className="form-inline">
+          <div className="form-group">
                 <input 
                 type="text" 
-                placeholder="Enter the User Name" 
+                className="form-control"
+                placeholder="User Name and Press Enter" 
                 value={this.state.username} 
                 name="username"
                 onChange={this.handleChange} 
                 />
-                <button>Search</button>
+                <button type="button" className="btn btn-primary">Search</button>
+                </div>
           </form>
-          <br /><br /><br /><br />
+
+  
+
           {(this.state.displayData && this.state.character.login) ?
             
-                <div>
-                  <div> {this.state.username}</div>
-                  <div>{this.state.rep}</div>
-                  <div>{this.state.followers}</div>
-                  <div>{this.state.following}</div>
-                  {console.log(this.state.image)}
-                  <div><img src={this.state.image}/></div>
-                </div>
+                <div className="border">
+                  <div className="panel-body">
+                    <div className="row">
+                      <div className="col-sm-4">
+                            <div><img src={this.state.image}/></div>
+                        </div>
+                         <div className="col-sm-8">
+                            <div>UserName: {this.state.username}</div>
+                            <div>Repositories:{this.state.rep}</div>
+                            <div>Followers:{this.state.followers}</div>
+                            <div>Following:{this.state.following}</div>
+                            {console.log(this.state.image)}
 
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+              
 
-
-                : <div> {(this.state.error) ? "Error, Try again Later" : "enter valid username" }</div>
+                : <div> {(this.state.error) ? "Error, Try again Later" : 
+                                                <h3><small>enter valid username</small></h3> 
+                        }
+                  </div>
 
             }
              {console.log(this.state.character)}

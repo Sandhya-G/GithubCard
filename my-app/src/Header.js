@@ -4,8 +4,12 @@ import './App.css';
 function Header()
 {
 	return (
-		<h2>Github Details </h2>
-		);
+	<div class="center">
+    	
+    		<img className="App-logo" src={logo} alt="logo"/>
+    		 <div className="header" >Github Details </div>
+    </div>
+			);
 }
 
 export default Header;
