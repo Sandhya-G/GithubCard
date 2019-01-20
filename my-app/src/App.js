@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Footer from './Footer'
+import Display from './Display'
 const API = 'https://api.github.com/users';
 
 class App extends Component {
@@ -10,15 +11,11 @@ class App extends Component {
     this.state = {
       username:"",
       character:"",
-      image:"",
-      rep:"",
-      followers:"",
-      following:"",
-      character:"",
       displayData:"",
       error:false
 
     }
+    //binding is requires to call setState method
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -28,15 +25,14 @@ class App extends Component {
     this.setState(
       { displayData:true,
         character:data,
-        username:data.login ,
-        url:data.url,
-        followers:data.followers,
-        following:data.following,
-        image:data.avatar_url,
-        rep:data.public_repos}
+       }
 
       )
   }
+  /*
+  fetch is used to get data from an API, it returns a promise.
+  if no error occurs, data is displayed.
+  */
     getData(username)
     {
        let url = `${API}/${username}`;
@@ -45,10 +41,10 @@ class App extends Component {
             .then(response => response.json())
             .then(data => {
                this.display(data)
-            }).catch((error) => this.setState({error:true}) )
+            }).catch(() => this.setState({error:true}) )
   }
 
-
+  //this is called whenever input is changed, it sets displayData to false, which earses any previously displayed data.
   handleChange(event) {
         this.setState({
             username: event.target.value,
@@ -57,6 +53,7 @@ class App extends Component {
         })
     }
 
+    //this is called when submit button is clicked or enter key is pressed.
      handleSubmit(event) {
         event.preventDefault()
         console.log(this.state.username)
@@ -64,55 +61,28 @@ class App extends Component {
         
     }
 
-   /*componentDidMount() {
-        let url = `${API}/${this.username}`;
-        console.log(url);
-        this.setState({loading: true})
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-               this.setState({ character : data  })
-              
-            })*/
-
-
+  //one of the lifeCycle methods, called whenever the state values are changed
   render() {
     return (
       <div >
-          <form onSubmit={this.handleSubmit} className="form-inline">
+          <form  className="form-inline" onSubmit={this.handleSubmit}>
           <div className="form-group">
                 <input 
                 type="text" 
                 className="form-control"
-                placeholder="User Name and Press Enter" 
+                placeholder="Enter the UserName" 
                 value={this.state.username} 
                 name="username"
                 onChange={this.handleChange} 
                 />
-                <button type="button" className="btn btn-primary">Search</button>
+                <button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Search</button>
                 </div>
           </form>
 
-  
-
           {(this.state.displayData && this.state.character.login) ?
             
-                <div className="border">
-                  <div className="panel-body">
-                    <div className="row">
-                      <div className="col-sm-4">
-                            <div><img src={this.state.image}/></div>
-                        </div>
-                         <div className="col-sm-8">
-                            <div>UserName: {this.state.username}</div>
-                            <div>Repositories:{this.state.rep}</div>
-                            <div>Followers:{this.state.followers}</div>
-                            <div>Following:{this.state.following}</div>
-                            {console.log(this.state.image)}
-
-                         </div>
-                      </div>
-                    </div>
+                <div>
+                    <Display data={this.state.character}/>
                   </div>
               
 
@@ -122,15 +92,9 @@ class App extends Component {
                   </div>
 
             }
-             {console.log(this.state.character)}
-
-                  
-          
-    
-        
+             
       </div>
     );
   }
 }
-
 export default App;

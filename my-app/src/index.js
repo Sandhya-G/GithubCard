@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 function Display()
 {
 	return(<div className="App">
-				<div><Header /></div>
+				<div><Header/></div>
 				<div><App /></div>
 			</div>
 			);
